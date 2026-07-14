@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { MyShop } from "../context/MyContext";
 
-const Cart = ({ cartItems }) => {
+const Cart = () => {
+
+  let {cartItems} = useContext(MyShop)
+
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * (item.quantity || 1),
     0
