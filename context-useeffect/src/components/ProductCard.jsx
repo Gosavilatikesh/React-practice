@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, setCartItems }) => {
   return (
     <div className="max-w-sm rounded-xl border border-gray-200 bg-white p-4 shadow-md hover:shadow-lg transition">
       <img
@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => {
           </div>
         </div>
 
-        <button className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700">
+        <button onClick={() => setCartItems((prev) => [...prev, product])} className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-white hover:bg-blue-700">
           Add to Cart
         </button>
       </div>

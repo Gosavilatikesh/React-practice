@@ -1,15 +1,15 @@
 import React from "react";
 
-const Navbar = () => {
+const Navbar = ({setIsCartOpen}) => {
 
   return (
     <div className="flex items-center justify-between bg-black text-white rounded p-4">
       <div>Logo</div>
       <div className="flex gap-10 text-xl">
-        <p className="cursor-pointer">
+        <p onClick={() => setIsCartOpen(false)} className="cursor-pointer">
           Home
         </p>
-        <p className="cursor-pointer">
+        <p onClick={() => setIsCartOpen(true)} className="cursor-pointer">
           Cart
         </p>
       </div>
