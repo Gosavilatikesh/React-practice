@@ -39,11 +39,21 @@ const ProductCard = ({ product, isInCart }) => {
         </div>
 
         {isInCart ? (
-          <button>
-            <span>+</span>
-            <span>1</span>
-            <span>-</span>
-          </button>
+          <div className="mt-4 flex justify-center items-center">
+  <div className="flex items-center rounded-lg border border-gray-300 overflow-hidden">
+    <button className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200">
+      -
+    </button>
+
+    <span className="w-10 h-10 flex items-center justify-center font-semibold">
+      1
+    </span>
+
+    <button className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200">
+      +
+    </button>
+  </div>
+</div>
         ) : (
           <button
             onClick={addToCart}
