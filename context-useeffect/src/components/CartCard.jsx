@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { MyStore } from "../context/MyContext";
 
-const CartCard = ({ product }) => {
+const CartCard = ({product}) => {
+
+  let {cartItems} = useContext(MyStore)
+
   return (
     <div className="flex flex-col gap-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm md:flex-row">
       {/* Product Image */}

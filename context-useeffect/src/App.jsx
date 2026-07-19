@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
 import CartScreen from "./pages/CartScreen";
+import { MyStore } from "./context/MyContext";
 
 const App = () => {
-  const [productsData, setProductsData] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  console.log(cartItems);
   
+  let {isCartOpen, setCartItems, cartItems} = useContext(MyStore)
+
+  const [productsData, setProductsData] = useState([]);
 
   const getProductsData = async () => {
     try {
@@ -25,20 +25,24 @@ const App = () => {
 
   return (
     <div className="h-screen p-2 flex flex-col gap-4">
-      <Navbar setIsCartOpen={setIsCartOpen}/>
+      <Navbar/>
 
       {isCartOpen ? (
         <div className="">
-          <CartScreen cartItems={cartItems}/>
+          <CartScreen />
         </div>
       ) : (
         <div className="grid grid-cols-5 gap-4">
           {productsData.map((elem) => {
+
+              let isInCart = cartItems.find((val) => val.id === elem.id)
+
             return (
               <ProductCard
                 key={elem.id}
                 product={elem}
                 setCartItems={setCartItems}
+                isInCart={isInCart}
               />
             );
           })}
