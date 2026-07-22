@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { Auth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
-const RegisterPage = () => {
+const LoginPage = () => {
 
-    const {setRegisteredUsers, registeredUsers, setlogedInUser} = useContext(Auth)
+    const {logedInUser, setlogedInUser, registeredUsers} = useContext(Auth)
 
   let navigate = useNavigate();
 
@@ -17,41 +18,33 @@ const RegisterPage = () => {
   } = useForm();
 
   let formSubmit = (data) => {
-    let arr = [...registeredUsers, data]
-    setRegisteredUsers(arr)
-    setlogedInUser(data)
-    localStorage.setItem('logedInUser', JSON.stringify(data))
-    localStorage.setItem("registeredUsers", JSON.stringify(arr))
-    navigate("/main")
+   
+    let user = registeredUsers.find((val) => {
+        return val.email === data.email && val.password === data.password;
+    })
+
+    if(!user){
+        toast.error("User not found")
+        reset()
+        return;
+    }
+    setlogedInUser(user);
+
+    localStorage.setItem('logedInUser', JSON.stringify(user))
+    toast.success("Logged In")
     reset();
+    navigate("/main")
+
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-8">
         <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Register
+          Login
         </h1>
 
         <form onSubmit={handleSubmit(formSubmit)} className="space-y-5">
-          {/* Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Name
-            </label>
-            <input
-              {...register("name", {
-                required: "Name is required",
-              })}
-              type="text"
-              placeholder="Enter your name"
-              className="w-full px-4 py-3 border rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.name && (
-              <p className="text-red-600">{errors.name.message}</p>
-            )}
-          </div>
-
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -92,23 +85,23 @@ const RegisterPage = () => {
             )}
           </div>
 
-          {/* Register Button */}
+          {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
           >
-            Register
+            Login
           </button>
         </form>
 
-        {/* Login Link */}
+        {/* Register Link */}
         <p className="text-center text-gray-600 mt-6">
-          Already have an account?{" "}
+          Not registered?{" "}
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/register")}
             className="text-blue-600 font-semibold hover:underline"
           >
-            Login
+            Register
           </button>
         </p>
       </div>
@@ -116,4 +109,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

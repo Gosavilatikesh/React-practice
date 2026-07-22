@@ -2,15 +2,16 @@ import React, { useContext } from 'react'
 import { Navigate, Outlet } from 'react-router'
 import { Auth } from '../context/AuthContext'
 
-const ProtectedRoutes = () => {
+
+const PublicRoutes = () => {
     const {logedInUser} = useContext(Auth)
     
-    if(!logedInUser){
-        return <Navigate to={"/"} />
+    if(logedInUser){
+        return <Navigate to={"/main"} />
     }
 
   return <Outlet />
   
 }
 
-export default ProtectedRoutes
+export default PublicRoutes
