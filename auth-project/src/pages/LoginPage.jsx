@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { Auth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
 
@@ -23,16 +24,17 @@ const LoginPage = () => {
     })
 
     if(!user){
-        alert("user not found")
+        toast.error("User not found")
+        reset()
         return;
     }
     setlogedInUser(user);
 
     localStorage.setItem('logedInUser', JSON.stringify(user))
-    alert("loged in")
+    toast.success("Logged In")
+    reset();
     navigate("/main")
 
-    reset();
   };
 
   return (
