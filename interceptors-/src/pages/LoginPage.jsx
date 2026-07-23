@@ -18,24 +18,33 @@ const LoginPage = () => {
   } = useForm();
 
   let formSubmit = (data) => {
-   
-    let user = registeredUsers.find((val) => {
-        return val.email === data.email && val.password === data.password;
-    })
+  console.log("Form Data:", data);
+  console.log("Registered Users:", registeredUsers);
 
-    if(!user){
-        toast.error("User not found")
-        reset()
-        return;
-    }
-    setlogedInUser(user);
+  const user = registeredUsers.find(
+    (val) =>
+      val.email === data.email &&
+      val.password === data.password
+  );
 
-    localStorage.setItem('logedInUser', JSON.stringify(user))
-    toast.success("Logged In")
-    reset();
-    navigate("/main")
+  console.log("Found User:", user);
 
-  };
+  if (!user) {
+    toast.error("User not found");
+    return;
+  }
+
+  localStorage.setItem("logedInUser", JSON.stringify(user));
+
+  console.log(
+    "Stored:",
+    localStorage.getItem("logedInUser")
+  );
+
+  setlogedInUser(user);
+  toast.success("logged in")
+  navigate("/main");
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">

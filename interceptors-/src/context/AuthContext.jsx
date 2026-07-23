@@ -1,13 +1,17 @@
-import { Children, createContext, useState } from "react";
+import { createContext, useState } from "react";
 
 export const Auth = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [registeredUsers, setRegisteredUsers] =
-    useState([JSON.parse(localStorage.getItem("registeredUsers"))]) || [];
-  const [logedInUser, setlogedInUser] = useState(
-    JSON.parse(localStorage.getItem("logedInUser")),
-  );
+  const [registeredUsers, setRegisteredUsers] = useState(() => {
+    const users = localStorage.getItem("registeredUsers");
+    return users ? JSON.parse(users) : [];
+  });
+
+  const [logedInUser, setlogedInUser] = useState(() => {
+    const user = localStorage.getItem("logedInUser");
+    return user ? JSON.parse(user) : null;
+  });
 
   return (
     <Auth.Provider
